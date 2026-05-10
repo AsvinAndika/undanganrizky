@@ -62,7 +62,7 @@ const EventDetails = () => {
 
   return (
     <section className="relative overflow-hidden bg-[#642828] bg-cover bg-center p-4 shadow-lg"
-     style={{ backgroundImage: "url('src/assets/backwhite.jpg')" }}>
+     style={{ backgroundImage: "url('public/assets/backwhite.jpg')" }}>
        <div className="absolute inset-0 bg-black/5" />
       <div className="max-w-2xl mx-auto px-4">
         <div className="text-center mb-6">
@@ -74,12 +74,12 @@ const EventDetails = () => {
         <div className="rounded-2xl bg-[#642828] border-2 border-[#e19823] shadow-sm overflow-hidden">
           <div className="p-6 text-center">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full border border-[#e19823] mx-auto mb-4">
-              <img src="/assets/event-icon.png" alt="event" className="w-6 h-6" />
+              <img src="public/assets/event-icon.png" alt="event" className="w-6 h-6" />
             </div>
 
             <h2 className="text-3xl font-serif font-medium text-amber-50">Wedding Ceremony</h2>
             <div className="mt-3 text-amber-50 flex items-center justify-center gap-3 text-sm">
-              <img src="/assets/time-icon.png" alt="time" className="w-4 h-4 inline-block" />
+              <img src="public/assets/time-icon.png" alt="time" className="w-4 h-4 inline-block" />
               <div>4:00 PM</div>
             </div>
 
@@ -101,12 +101,12 @@ const EventDetails = () => {
 
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
               <a href={`https://www.google.com/maps/search/?api=1&query=${mapQuery}`} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-[#e19823] rounded-md text-sm text-amber-700 bg-white hover:bg-amber-50"> 
-                <img src="/assets/maps-placeholder.png" alt="maps" className="w-4 h-4" />
+                <img src="public/assets/maps-placeholder.png" alt="maps" className="w-4 h-4" />
                 Open in Maps
               </a>
 
               <button onClick={handleAddToCalendar} className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-[#e19823] rounded-md text-sm text-gray-700 bg-white hover:bg-gray-50">
-                <img src="/assets/calendar-placeholder.png" alt="calendar" className="w-4 h-4" />
+                <img src="public/assets/calendar-placeholder.png" alt="calendar" className="w-4 h-4" />
                 Add to Calendar
               </button>
             </div>

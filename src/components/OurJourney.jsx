@@ -71,7 +71,7 @@ const OurJourney = () => {
         </div>
         {/* floral ornament centered at very bottom of this section */}
         <div className="mt-10 flex justify-center">
-          <img src="src/assets/burung.png" alt="ornament" className="w-60 opacity-90" />
+          <img src="public/assets/burung.png" alt="ornament" className="w-60 opacity-90" />
         </div>
       </div>
     </section>

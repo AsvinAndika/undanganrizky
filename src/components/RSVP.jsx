@@ -62,7 +62,7 @@ const RSVP = () => {
 
             <div>
               <button type="submit" className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-[#642828] text-amber-50 rounded-md text-base shadow border border-[#e19823]">
-                <img src="/assets/send-icon.png" alt="send" className="w-4 h-4" />
+                <img src="public/assets/send-icon.png" alt="send" className="w-4 h-4" />
                 Send RSVP
               </button>
             </div>
