@@ -1,0 +1,60 @@
+import React, { useEffect, useState } from 'react'
+
+const Countdown = ({ targetDate }) => {
+  const [t, setT] = useState(getRemaining())
+
+  function getRemaining() {
+    if (!targetDate) return null
+    const now = new Date()
+    const diff = new Date(targetDate) - now
+    if (diff <= 0) return null
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24))
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24)
+    const minutes = Math.floor((diff / (1000 * 60)) % 60)
+    const seconds = Math.floor((diff / 1000) % 60)
+    return { days, hours, minutes, seconds }
+  }
+
+  useEffect(() => {
+    const id = setInterval(() => setT(getRemaining()), 1000)
+    return () => clearInterval(id)
+  }, [targetDate])
+
+  if (!t)
+    return (
+      <div className="mt-6 text-center">
+        <div className="text-2xl text-amber-200">Acara telah berlangsung</div>
+      </div>
+    )
+
+  const parts = [
+    { value: t.days, label: 'Days' },
+    { value: t.hours, label: 'Hours' },
+    { value: t.minutes, label: 'Minutes' },
+    { value: t.seconds, label: 'Seconds' },
+  ]
+
+  return (
+    <div className="mt-4 mb-8 flex justify-center px-4 sm:px-8">
+        <div className="bg-[#642828] backdrop-blur-sm px-3 py-6 sm:px-8 sm:py-6 rounded-2xl w-full max-w-md sm:max-w-md md:max-w-lg lg:max-w-xl overflow-visible border-2 border-amber-400/70 shadow-sm">
+        <div className="text-center mb-3">
+          <div className="text-xs text-amber-200 uppercase tracking-widest">Countdown</div>
+          <div className="font-serif text-lg md:text-2xl text-amber-50">We look forward to celebrating with you</div>
+        </div>
+
+        <div className="flex items-center justify-center gap-6 whitespace-nowrap">
+          {parts.map((p) => (
+            <div key={p.label} className="flex flex-col items-center flex-shrink-0">
+              <div className="w-10 h-10 sm:w-14 md:w-20 rounded-full bg-amber-50/5 flex items-center justify-center ring-2 ring-amber-400/90 shadow-md">
+                <div className="text-base sm:text-xl md:text-3xl font-serif text-amber-100">{String(p.value).padStart(2, '0')}</div>
+              </div>
+              <div className="mt-2 text-[10px] sm:text-xs md:text-sm uppercase tracking-wider text-amber-200">{p.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default Countdown
