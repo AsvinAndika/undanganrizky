@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Opening from './components/Opening'
 import Invitation from './components/Invitation'
 

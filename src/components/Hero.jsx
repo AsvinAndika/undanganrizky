@@ -1,4 +1,3 @@
-import React from 'react'
 
 const Hero = () => {
   return (
@@ -16,10 +15,29 @@ const Hero = () => {
 
       <div className="relative z-10 flex h-full items-center justify-center px-6">
         <div className="text-center text-amber-50">
-          <div className="text-sm uppercase tracking-widest text-amber-200">We're getting married</div>
-          <h1 className="mt-4 text-4xl md:text-6xl font-serif">Rizky &amp; Jihan</h1>
-          <p className="mt-4 text-sm md:text-base">22 November 2026</p>
+          <div className="text-sm uppercase tracking-widest text-amber-200">The Wedding Of</div>
+          <h1 className="mt-4 text-5xl md:text-6xl font-bold" style={{ fontFamily: "'Great Vibes', cursive" }}>Rizky &amp; Jihan</h1>
+          <p className="mt-4 text-sm md:text-base">27 Juni 2026</p>
         </div>
+      </div>
+
+      <div className="absolute bottom-8 left-0 right-0 z-10 text-center">
+        <a className="inline-flex flex-col items-center gap-2 text-amber-50 text-sm md:text-base hover:text-amber-200 transition-colors">
+          <span>Info Selengkapnya</span>
+          <svg
+            className="h-5 w-5 animate-bounce"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M12 5v14" />
+            <path d="m19 12-7 7-7-7" />
+          </svg>
+        </a>
       </div>
     </section>
   )

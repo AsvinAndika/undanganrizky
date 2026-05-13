@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import{ useState, useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 
 const RSVP = () => {
   const [name, setName] = useState('')
@@ -6,6 +7,50 @@ const RSVP = () => {
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState([])
   const [showAll, setShowAll] = useState(false)
+  const messagesRef = useRef(null)
+  const [highlightId, setHighlightId] = useState(null)
+
+  // Auto-fill name from ?to=Query param (decode pluses)
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search)
+      const raw = params.get('to')
+      if (raw && !name) {
+        const decoded = decodeURIComponent(raw.replace(/\+/g, ' '))
+        setName(decoded)
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, [])
+
+  const formatRelativeTime = (iso) => {
+    try {
+      const now = Date.now()
+      const past = new Date(iso).getTime()
+      let diff = Math.floor((now - past) / 1000)
+      if (isNaN(diff) || diff < 0) return ''
+
+      if (diff < 60) return 'baru saja'
+      if (diff < 3600) {
+        const m = Math.floor(diff / 60)
+        return `${m} menit yang lalu`
+      }
+      if (diff < 86400) {
+        const h = Math.floor(diff / 3600)
+        const m = Math.floor((diff % 3600) / 60)
+        return m > 0 ? `${h} jam ${m} menit yang lalu` : `${h} jam yang lalu`
+      }
+      const days = Math.floor(diff / 86400)
+      if (days < 30) return `${days} hari yang lalu`
+      const months = Math.floor(days / 30)
+      if (months < 12) return `${months} bulan yang lalu`
+      const years = Math.floor(months / 12)
+      return `${years} tahun yang lalu`
+    } catch (e) {
+      return ''
+    }
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -20,68 +65,81 @@ const RSVP = () => {
     }
 
     setMessages(prev => [entry, ...prev])
+    // highlight new message and scroll container
+    setHighlightId(entry.id)
     setName('')
     setAttend('yes')
     setMessage('')
   }
 
+  // Scroll to top and clear highlight after a short delay when messages change
+  useEffect(() => {
+    if (messagesRef.current) {
+      messagesRef.current.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+    if (highlightId) {
+      const t = setTimeout(() => setHighlightId(null), 900)
+      return () => clearTimeout(t)
+    }
+  }, [messages, highlightId])
+
   return (
     <section className="relative overflow-hidden bg-[#642828] bg-cover bg-center p-4 shadow-lg">
       <div className="max-w-2xl mx-auto px-4 mt-10">
-        <div className="text-center mb-6">
-          <p className="text-sm text-amber-200 uppercase tracking-widest">Be Our Guest</p>
-          <h2 className="font-serif text-5xl text-[#faf4eb] md:text-6xl text-wedding-olive mt-2">RSVP</h2>
-          <p className="mt-3 text-sm text-[#faf4eb]">Please let us know if you'll be joining us by October 22, 2026</p>
-        </div>
+        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true }} className="text-center mb-6">
+          <p className="text-sm text-amber-200 uppercase tracking-widest">berikan</p>
+          <h2 className="text-4xl text-[#faf4eb] md:text-6xl text-wedding-olive mt-3 font-bold"  style={{ fontFamily: "'Great Vibes', cursive" }}>Doa & Ucapan</h2>
+          {/* <p className="mt-3 text-sm text-[#faf4eb]">Please let us know if you'll be joining us by October 22, 2026</p> */}
+        </motion.div>
 
-        <div className="bg-white rounded-2xl shadow p-6 border border-[#e19823]">
+        <motion.div initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.06 }} viewport={{ once: true }} className="bg-white rounded-2xl shadow p-6 border border-[#e19823]">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block font-medium text-sm text-[#642828] mb-2 font-serif">Full Name *</label>
-              <input value={name} onChange={e => setName(e.target.value)} placeholder="Your full name" required className="w-full p-3 border border-[#642828] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e19823]" />
+              <label className="block font-medium text-sm text-[#642828] mb-2 font-serif">Nama Lengkap *</label>
+              <input value={name} onChange={e => setName(e.target.value)} placeholder="Nama Lengkap" required className="w-full p-3 border border-[#642828] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e19823]" />
             </div>
 
             <div>
-              <label className="block font-medium text-sm text-[#642828] mb-2 font-serif">Will you be attending? *</label>
+              <label className="block font-medium text-sm text-[#642828] mb-2 font-serif">Konfirmasi Kehadiran *</label>
               <div className="flex gap-4">
                 <label className="inline-flex items-center gap-2">
                   <input type="radio" name="attend" value="yes" checked={attend === 'yes'} onChange={() => setAttend('yes')} />
-                  <span className="text-sm">Joyfully Accept</span>
+                  <span className="text-sm">Hadir</span>
                 </label>
                 <label className="inline-flex items-center gap-2">
                   <input type="radio" name="attend" value="no" checked={attend === 'no'} onChange={() => setAttend('no')} />
-                  <span className="text-sm">Regretfully Decline</span>
+                  <span className="text-sm">Tidak Hadir</span>
                 </label>
               </div>
             </div>
 
             <div>
-              <label className="block font-medium text-sm text-[#642828] mb-2 font-serif">Message for the Couple</label>
-              <textarea value={message} onChange={e => setMessage(e.target.value)} placeholder="Share your well wishes..." rows={4} className="w-full p-3 border border-[#642828] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e19823]" />
+              <label className="block font-medium text-sm text-[#642828] mb-2 font-serif">Ucapan Untuk Pasangan</label>
+              <textarea value={message} onChange={e => setMessage(e.target.value)} placeholder="Tulis Ucapan..." rows={4} className="w-full p-3 border border-[#642828] rounded-md focus:outline-none focus:ring-2 focus:ring-[#e19823]" />
             </div>
 
             <div>
               <button type="submit" className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-[#642828] text-amber-50 rounded-md text-base shadow border border-[#e19823]">
-                <img src="public/assets/send-icon.png" alt="send" className="w-4 h-4" />
-                Send RSVP
+                <img src="public/assets/kirim.png" alt="send" className="w-5 h-5" />
+                Kirim Doa & Ucapan
               </button>
             </div>
           </form>
-        </div>
+        </motion.div>
 
         {/* submitted messages (nested card) */}
-        <div className="mt-6 mb-6">
+        <motion.div initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.12 }} viewport={{ once: true }} className="mt-3 mb-3">
           <div className="bg-[#faf4eb] rounded-lg p-4 border border-[#e19823]">
-            <h3 className="text-lg font-serif text-[#642828] mb-3">Messages</h3>
+            <h3 className="text-lg font-serif text-[#642828] mb-3">Ucapan</h3>
             <div className="space-y-3 max-h-72 overflow-auto">
               {(showAll ? messages : messages.slice(0, 3)).map(m => (
-                <div key={m.id} className="p-3 bg-#faf4eb rounded-md shadow-sm border border-[#642828]">
+                <div key={m.id} className={`p-3 bg-[#faf4eb] rounded-md shadow-sm border border-[#642828] ${m.id === highlightId ? 'animate-pulse' : ''}`}>
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="font-medium text-[#642828]">{m.name}</div>
                       <div className="text-sm text-gray-700">{m.attend === 'yes' ? 'Hadir' : 'Tidak Hadir'}</div>
                     </div>
-                    <div className="text-xs text-gray-600">{new Date(m.time).toLocaleString()}</div>
+                    <div className="text-xs text-gray-600" title={new Date(m.time).toLocaleString()}>{formatRelativeTime(m.time)}</div>
                   </div>
                   <div className="mt-2 text-gray-800 text-sm">{m.message}</div>
                 </div>
@@ -91,11 +149,14 @@ const RSVP = () => {
             {messages.length > 3 && (
               <div className="mt-3 text-center">
                 <button onClick={() => setShowAll(s => !s)} className="text-sm text-[#642828] underline">
-                  {showAll ? 'See less' : `See more (${messages.length - 3} more)`}
+                  {showAll ? 'Lihat Sedikit' : `Lihat lainnya (${messages.length - 3} Lainnya)`}
                 </button>
               </div>
             )}
           </div>
+        </motion.div>
+        <div className="mt-2 flex justify-center">
+          <img src="public/assets/bungaa3.png" alt="ornament" className="w-70 opacity-100" />
         </div>
       </div>
     </section>

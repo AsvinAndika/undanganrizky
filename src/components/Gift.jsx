@@ -1,14 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 
 const COLORS = ['#F87171', '#FB923C', '#FBBF24', '#34D399', '#60A5FA', '#A78BFA']
 
 const Gift = () => {
-  const [open, setOpen] = useState(false)
-  const [showIban, setShowIban] = useState(false)
+  const [open] = useState(true)
   const [confetti, setConfetti] = useState([])
   const containerRef = useRef(null)
-  const IBAN = 'BCA 1234 5678 9012 3456 7890 123'
-  const IBAN_PLACEHOLDER = 'BCA •••• •••• •••• •••• •••• •••'
+  const ACCOUNTS = [
+    { bank: 'BNI', number: '0123456789', name: 'Rizky Dian Arhaman' },
+    { bank: 'BRI', number: '0123456789', name: 'Jihan Shava Amani' }
+  ]
 
   useEffect(() => {
     let t
@@ -18,27 +20,26 @@ const Gift = () => {
     return () => clearTimeout(t)
   }, [confetti])
 
-  const toggleOpen = () => {
-    setOpen(v => {
-      const willOpen = !v
-      if (willOpen) launchConfetti(36)
-      return willOpen
-    })
-  }
-
-  const revealIban = () => {
-    if (!showIban) {
-      setShowIban(true)
-    }
-  }
-
-  const copyIban = async () => {
+  const copyText = async (text) => {
     try {
-      await navigator.clipboard.writeText(IBAN)
+      await navigator.clipboard.writeText(text)
+      // small confetti burst on copy
+      launchConfetti(18)
+      setToast({ show: true, text: 'Nomor rekening tersalin' })
     } catch {
       // ignore
     }
   }
+
+  const [toast, setToast] = useState({ show: false, text: '' })
+
+  useEffect(() => {
+    let t
+    if (toast.show) {
+      t = setTimeout(() => setToast({ show: false, text: '' }), 1800)
+    }
+    return () => clearTimeout(t)
+  }, [toast])
 
   const launchConfetti = (count = 60) => {
     const container = containerRef.current
@@ -57,11 +58,13 @@ const Gift = () => {
       const rot = Math.random() * 720 - 360 // Putaran acak yang lebih ekstrem
 
       const borderRadius = Math.random() > 0.5 ? '50%' : `${Math.floor(Math.random() * 6)}px`
+      const height = size * (0.6 + Math.random() * 0.8)
       
       return {
         id: `${Date.now()}-${i}`,
         left,
         size,
+        height,
         color,
         delay,
         duration,
@@ -76,51 +79,56 @@ const Gift = () => {
   }
 
   return (
-    <section className="relative overflow-hidden bg-[#fff1d7] bg-cover bg-center p-4 shadow-lg">
-      <div className="max-w-2xl mx-auto px-4 relative z-10">
-        <div className="text-center mb-12 animate-fade-in">
-          <h2 className="font-serif text-[#642828] text-5xl md:text-6xl text-wedding-olive mb-6 mx-0 px-0 my-5">Gifts</h2>
-          <p className="text-muted-foreground leading-relaxed max-w-lg mx-auto">Your presence is what matters most to us.<br className="hidden md:block" />If you wish to give us a gift, you can do so in the way that suits you best.</p>
-        </div>
+    <section className="relative overflow-hidden bg-[#ffe7ba] bg-cover bg-center p-4 shadow-lg">
+      <div className="max-w-2xl mx-auto px-4 relative z-10 mb-4">
+        <motion.div initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }} viewport={{ once: true }} className="text-center mb-12">
+          <h2 className="text-[#642828] text-5xl md:text-6xl text-wedding-olive mb-6 mx-0 px-0 my-5 font-bold" style={{ fontFamily: "'Great Vibes', cursive" }}>Hadiah</h2>
+          <p className="text-muted-foreground leading-relaxed max-w-lg mx-auto">Tanpa mengurangi rasa hormat, bagi Bapak/Ibu/Saudara/i yang ingin memberikan tanda kasih untuk kami, dapat melalui:</p>
+        </motion.div>
 
-        <div className="rounded-2xl bg-[#642828] border-2 shadow-sm overflow-hidden animate-fade-in bg-wedding-olive border-wedding-olive relative" style={{ animationDelay: '0.2s' }} ref={containerRef}>
-          <button
-            className="w-full px-6 py-5 flex items-center justify-between text-left hover:bg-secondary/30 transition-colors"
-            onClick={toggleOpen}
-            aria-expanded={open}
-          >
-            <span className="font-serif text-lg text-white">Contribution</span>
-            <div className={`transition-transform duration-300 ${open ? 'rotate-0' : 'rotate-180'}`}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-muted-foreground">
-                <path d="m6 9 6 6 6-6"></path>
-              </svg>
-            </div>
-          </button>
-
-          <div className={`overflow-hidden bg-white transition-all duration-300 ${open ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
-            <div className="px-6 pb-6 pt-2 border-t border-border bg-primary-foreground">
-              <p className="text-muted-foreground text-sm leading-relaxed mb-2">If you prefer, the gift can be in cash.</p>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-6">If it suits you better, you can also make a bank transfer:</p>
-
-              <div className="text-center">
-                <div className="space-y-2">
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider">Number</p>
-                  <p className="font-mono text-sm text-foreground/80 tracking-wide select-all">{showIban ? IBAN : IBAN_PLACEHOLDER}</p>
-                  <div className="mt-3">
-                    {!showIban ? (
-                      <button type="button" onClick={(e) => { e.stopPropagation(); revealIban(); }} className="text-sm text-[#642828] underline">Show Number</button>
-                    ) : (
-                      <button type="button" onClick={(e) => { e.stopPropagation(); copyIban(); }} className="px-3 py-1 bg-[#642828] text-white rounded text-sm">Copy</button>
-                    )}
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.08 }} viewport={{ once: true }} className="rounded-2xl bg-[#642828] border-2 shadow-sm overflow-hidden bg-wedding-olive border-wedding-olive relative" style={{ animationDelay: '0.2s' }} ref={containerRef}>
+          <div className="p-6 bg-white border-t border-border">
+            
+            <div className="space-y-6">
+              {ACCOUNTS.map((acc, idx) => (
+                <motion.div key={idx} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: idx * 0.06 }} viewport={{ once: true }} className="rounded-lg bg-white shadow-md p-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-white rounded flex items-center justify-center">
+                      {acc.bank === 'BNI' ? (
+                        <img src="/public/assets/BNI.png" alt="BNI" className="w-10 h-6 object-contain" onError={(e)=>{e.currentTarget.style.display='none'}} />
+                      ) : acc.bank === 'BRI' ? (
+                        <img src="/public/assets/BRI.png" alt="BRI" className="w-10 h-6 object-contain" onError={(e)=>{e.currentTarget.style.display='none'}} />
+                      ) : (
+                        <svg width="20" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="6" width="20" height="12" rx="2" fill="#FDE68A" stroke="#f3a34a"/></svg>
+                      )}
+                    </div>
+                    <div>
+                      <div className="text-sm text-muted-foreground">Nomor Rekening :</div>
+                      <div className="font-mono text-sm text-foreground/90 tracking-wide select-all">{acc.number}</div>
+                      <div className="text-sm text-muted-foreground mt-1">Atas Nama : <span className="text-foreground font-semibold">{acc.name}</span></div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          {/* confetti pieces overlay */}
-          
-        </div>
+                  <div className="mt-4">
+                    <button onClick={() => copyText(acc.number)} className="w-full px-4 py-2 bg-[#f3a34a] text-white rounded-md flex items-center justify-center gap-2">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="9" y="9" width="11" height="11" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                      <span className="text-sm">Salin Rekening</span>
+                    </button>
+                  </div>
+                </motion.div>
+              ))}
+              <p className="text-muted-foreground text-center text-sm leading-relaxed mb-6">Mohon untuk memastikan rekening atau alamat kado sudah sesuai, sebelum anda mengirimkan hadiah. Jika ada ragu jangan sungkan untuk menanyakan kepada yang bersangkutan.</p>
+
+            </div>
+            
+          </div>
+          {/* Toast confirmation */}
+          {toast.show ? (
+            <div className="fixed left-1/2 transform -translate-x-1/2 bottom-8 z-50">
+              <div className="bg-black/80 text-white text-sm px-4 py-2 rounded-md">{toast.text}</div>
+            </div>
+          ) : null}
+        </motion.div>
         <div className="pointer-events-none absolute inset-0 overflow-visible">
             {confetti.map(p => (
               <div
@@ -130,7 +138,7 @@ const Gift = () => {
                   left: p.left,
                   bottom: 24,
                   width: p.size,
-                  height: p.size * (0.6 + Math.random() * 0.8),
+                  height: p.height,
                   background: p.color,
                   borderRadius: p.borderRadius,
                   transform: `rotate(${p.rot})`,
@@ -142,6 +150,9 @@ const Gift = () => {
               />
             ))}
           </div>
+          {/* <div className="mt-1 flex justify-center">
+          <img src="public/assets/bingkai.png" alt="ornament" className="w-90 opacity-80" />
+        </div> */}
       </div>
 
     
