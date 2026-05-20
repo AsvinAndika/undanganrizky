@@ -4,13 +4,13 @@ import { motion } from 'framer-motion'
 
 const Gallery = () => {
   const images = [
-    'public/assets/galeri/galeri1.jpg',
-    'public/assets/galeri/galeri2.jpg',
-    'public/assets/galeri/galeri3.jpg',
-    'public/assets/galeri/galeri1.jpg',
-    'public/assets/galeri/galeri2.jpg',
-    'public/assets/galeri/galeri3.jpg',
-    'public/assets/galeri/galeri3.jpg',
+    '/assets/galeri/galeri1.jpg',
+    '/assets/galeri/galeri2.jpg',
+    '/assets/galeri/galeri3.jpg',
+    '/assets/galeri/galeri1.jpg',
+    '/assets/galeri/galeri2.jpg',
+    '/assets/galeri/galeri3.jpg',
+    '/assets/galeri/galeri3.jpg',
   ]
 
   const [open, setOpen] = useState(false)

@@ -38,7 +38,7 @@ const Countdown = ({ targetDate }) => {
   return (
     <div className="relative overflow-hidden bg-cover bg-[#fff1d7] bg-center p-4 shadow-lg">
       <div className="mb-1 flex justify-center">
-          <img src="public/assets/bingkai1.png" alt="ornament" className="w-90 opacity-80" />
+          <img src="/assets/bingkai1.png" alt="ornament" className="w-90 opacity-80" />
         </div>
         <motion.div initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: 'easeOut' }} viewport={{ once: true }} className="bg-[#642828] backdrop-blur-sm px-3 py-6 sm:px-8 sm:py-6 rounded-2xl w-full max-w-md sm:max-w-md md:max-w-lg lg:max-w-xl overflow-visible border-2 border-amber-400/70 shadow-sm mb-1">
         <motion.div initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} viewport={{ once: true }} className="text-center mb-3">
@@ -58,7 +58,7 @@ const Countdown = ({ targetDate }) => {
         </div>
       </motion.div>
       <div className="mb-3 flex justify-center">
-          <img src="public/assets/bingkai.png" alt="ornament" className="w-90 opacity-80" />
+          <img src="/assets/bingkai.png" alt="ornament" className="w-90 opacity-80" />
         </div>
     </div>
   )

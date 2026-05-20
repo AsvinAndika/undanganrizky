@@ -94,9 +94,9 @@ const Gift = () => {
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-white rounded flex items-center justify-center">
                       {acc.bank === 'BNI' ? (
-                        <img src="/public/assets/BNI.png" alt="BNI" className="w-10 h-6 object-contain" onError={(e)=>{e.currentTarget.style.display='none'}} />
+                        <img src="/assets/BNI.png" alt="BNI" className="w-10 h-6 object-contain" onError={(e)=>{e.currentTarget.style.display='none'}} />
                       ) : acc.bank === 'BRI' ? (
-                        <img src="/public/assets/BRI.png" alt="BRI" className="w-10 h-6 object-contain" onError={(e)=>{e.currentTarget.style.display='none'}} />
+                        <img src="/assets/BRI.png" alt="BRI" className="w-10 h-6 object-contain" onError={(e)=>{e.currentTarget.style.display='none'}} />
                       ) : (
                         <svg width="20" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="6" width="20" height="12" rx="2" fill="#FDE68A" stroke="#f3a34a"/></svg>
                       )}

@@ -82,7 +82,7 @@ const OurJourney = () => {
         </div>
 
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: 'easeOut', delay: 0.5 }} viewport={{ once: true, amount: 0.3 }} className="mt-2 flex justify-center">
-          <img src="public/assets/bungaa5.png" alt="ornament" className="w-80 opacity-100" />
+          <img src="/assets/bungaa5.png" alt="ornament" className="w-80 opacity-100" />
         </motion.div>
       </div>
     </section>

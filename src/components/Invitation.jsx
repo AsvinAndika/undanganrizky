@@ -24,7 +24,7 @@ const Invitation = () => {
         <RSVP />
         <Gallery />
       </main>
-      <MusicPlayer src="public/assets/music1.mp3" />
+      <MusicPlayer src="/assets/music1.mp3" />
       <Footer />
     </div>
   )

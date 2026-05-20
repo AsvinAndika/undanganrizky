@@ -115,7 +115,7 @@ const RSVP = () => {
 
             <div>
               <button type="submit" className="w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-[#642828] text-amber-50 rounded-md text-base shadow border border-[#e19823]">
-                <img src="public/assets/kirim.png" alt="send" className="w-5 h-5" />
+                <img src="/assets/kirim.png" alt="send" className="w-5 h-5" />
                 Kirim Doa & Ucapan
               </button>
             </div>
@@ -151,7 +151,7 @@ const RSVP = () => {
           </div>
         </motion.div>
         <div className="mt-2 flex justify-center">
-          <img src="public/assets/bungaa3.png" alt="ornament" className="w-70 opacity-100" />
+          <img src="/assets/bungaa3.png" alt="ornament" className="w-70 opacity-100" />
         </div>
       </div>
     </section>

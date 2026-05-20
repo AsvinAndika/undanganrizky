@@ -16,7 +16,7 @@ const DayProgram = () => {
   return (
     <section
       className="relative overflow-hidden bg-[#fff1d7] bg-cover bg-center text-amber-50 p-8 shadow-lg"
-      style={{ backgroundImage: "url('public/assets/backred.jpg')" }}>
+      style={{ backgroundImage: "url('/assets/backred.jpg')" }}>
       <div className="absolute inset-0 bg-black/25" />
 
       <div className="relative z-10">

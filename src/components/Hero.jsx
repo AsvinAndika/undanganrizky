@@ -4,7 +4,7 @@ const Hero = () => {
     <section className="relative h-screen w-full overflow-hidden">
       <video
         className={`absolute inset-0 w-full h-full object-cover controls-hidden`}
-        src="public/assets/hero-video.mp4"
+        src="/assets/hero-video.mp4"
         playsInline
         autoPlay
         muted

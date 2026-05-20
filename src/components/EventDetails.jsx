@@ -45,7 +45,7 @@ const EventDetails = () => {
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.12 }} viewport={{ once: true }} className="rounded-2xl bg-[#642828] border-2 border-[#e19823] shadow-sm overflow-hidden">
           <div className="p-6 text-center">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full border border-[#e19823] mx-auto mb-4">
-              <img src="public/assets/bintang.png" alt="event" className="w-9 h-9" />
+              <img src="/assets/bintang.png" alt="event" className="w-9 h-9" />
             </div>
 
             <h2 className="text-3xl font-medium text-amber-50" style={{ fontFamily: "'Great Vibes', cursive" }}>Akad Nikah</h2>
@@ -53,7 +53,7 @@ const EventDetails = () => {
               <div>Sabtu 27 Juni 2026</div>
             </div>
             <div className="mt-3 text-amber-50 flex items-center justify-center gap-3 text-sm">
-              <img src="public/assets/jam.png" alt="time" className="w-4 h-4 inline-block" />
+              <img src="/assets/jam.png" alt="time" className="w-4 h-4 inline-block" />
               <div>Pukul 9:00 WITA - Selesai</div>
             </div>
 
@@ -78,7 +78,7 @@ const EventDetails = () => {
 
             <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
               <a href="#" onClick={openInMaps} role="button" className="inline-flex items-center justify-center gap-2 px-4 py-2 border border-[#e19823] rounded-md text-sm text-amber-700 bg-white hover:bg-amber-50"> 
-                <img src="public/assets/lokasi2.png" alt="maps" className="w-6 h-6" />
+                <img src="/assets/lokasi2.png" alt="maps" className="w-6 h-6" />
                 Open in Maps
               </a>
             </div>
