@@ -1,24 +1,21 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 
 const Opening = ({ onComplete = () => {} }) => {
   const [fading, setFading] = useState(false)
-  const [guestName, setGuestName] = useState('')
-  const [nameFading, setNameFading] = useState(false)
-  const videoRef = useRef(null)
-
-  // Parse ?to=Name+Here from URL and decode pluses
-  useEffect(() => {
+  const [guestName] = useState(() => {
     try {
       const params = new URLSearchParams(window.location.search)
       const raw = params.get('to')
       if (raw) {
-        const decoded = decodeURIComponent(raw.replace(/\+/g, ' '))
-        setGuestName(decoded)
+        return decodeURIComponent(raw.replace(/\+/g, ' '))
       }
-    } catch (e) {
+    } catch {
       // ignore
     }
-  }, [])
+    return ''
+  })
+  const [nameFading, setNameFading] = useState(false)
+  const videoRef = useRef(null)
 
   const handleVideoClick = async () => {
     if (!videoRef.current) return

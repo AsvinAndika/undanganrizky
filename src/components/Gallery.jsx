@@ -1,16 +1,16 @@
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 
 const Gallery = () => {
   const images = [
     'public/assets/galeri/galeri1.jpg',
     'public/assets/galeri/galeri2.jpg',
-    // 'public/assets/galeri/galeri3.jpg',
-    // 'public/assets/galeri/galeri4.jpg',
-    // 'public/assets/galeri/galeri5.jpg',
-    // 'public/assets/galeri/galeri6.jpg',
-    // 'public/assets/galeri/galeri7.jpg',
+    'public/assets/galeri/galeri3.jpg',
+    'public/assets/galeri/galeri1.jpg',
+    'public/assets/galeri/galeri2.jpg',
+    'public/assets/galeri/galeri3.jpg',
+    'public/assets/galeri/galeri3.jpg',
   ]
 
   const [open, setOpen] = useState(false)
@@ -26,8 +26,8 @@ const Gallery = () => {
     setOpen(true)
   }
 
-  const next = () => setIndex(i => (i + 1) % images.length)
-  const prev = () => setIndex(i => (i - 1 + images.length) % images.length)
+  const next = useCallback(() => setIndex(i => (i + 1) % images.length), [images.length])
+  const prev = useCallback(() => setIndex(i => (i - 1 + images.length) % images.length), [images.length])
 
   useEffect(() => {
     if (!open) return
@@ -38,7 +38,7 @@ const Gallery = () => {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [open])
+  }, [open, next, prev])
 
   // rotate featured image every 10 seconds, pause on open or hover
   useEffect(() => {

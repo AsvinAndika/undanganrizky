@@ -4,7 +4,6 @@ import { motion } from 'framer-motion'
 const COLORS = ['#F87171', '#FB923C', '#FBBF24', '#34D399', '#60A5FA', '#A78BFA']
 
 const Gift = () => {
-  const [open] = useState(true)
   const [confetti, setConfetti] = useState([])
   const containerRef = useRef(null)
   const ACCOUNTS = [

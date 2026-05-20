@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 
 const Countdown = ({ targetDate }) => {
-  const [t, setT] = useState(getRemaining())
-
-  function getRemaining() {
+  const getRemaining = useCallback(() => {
     if (!targetDate) return null
     const now = new Date()
     const diff = new Date(targetDate) - now
@@ -14,12 +12,14 @@ const Countdown = ({ targetDate }) => {
     const minutes = Math.floor((diff / (1000 * 60)) % 60)
     const seconds = Math.floor((diff / 1000) % 60)
     return { days, hours, minutes, seconds }
-  }
+  }, [targetDate])
+
+  const [t, setT] = useState(getRemaining())
 
   useEffect(() => {
     const id = setInterval(() => setT(getRemaining()), 1000)
     return () => clearInterval(id)
-  }, [targetDate])
+  }, [getRemaining])
 
   if (!t)
     return (

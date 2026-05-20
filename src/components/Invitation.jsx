@@ -17,7 +17,7 @@ const Invitation = () => {
       <main className="max-w-1xl mx-auto">
         <CoupleDetails />
         <OurJourney />
-        <Countdown targetDate={new Date('2026-07-27T10:00:00')} />
+        <Countdown targetDate={new Date('2026-06-27T10:00:00')} />
         <DayProgram />
         <Gift />
         <EventDetails />

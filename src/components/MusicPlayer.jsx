@@ -1,13 +1,12 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useMemo } from 'react'
 
 const MusicPlayer = ({ src = '/assets/music1.mp3' }) => {
   const audioRef = useRef(null)
   const [playing, setPlaying] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [autoplayRejected, setAutoplayRejected] = useState(false)
 
   // Normalize to array of candidate sources. Add a sensible fallback.
-  const sources = Array.isArray(src) ? src : [src, '/assets/music1.mp3']
+  const sources = useMemo(() => Array.isArray(src) ? src : [src, '/assets/music1.mp3'], [src])
 
   useEffect(() => {
     const audio = audioRef.current
@@ -38,7 +37,7 @@ const MusicPlayer = ({ src = '/assets/music1.mp3' }) => {
     if (!audio) return
     audio.src = sources[currentIndex]
     audio.load()
-  }, [currentIndex, src])
+  }, [currentIndex, sources])
 
   // Try to autoplay on mount; if blocked, wait for first user interaction.
   useEffect(() => {
@@ -53,11 +52,9 @@ const MusicPlayer = ({ src = '/assets/music1.mp3' }) => {
         audio.muted = false
         await audio.play()
         setPlaying(true)
-        setAutoplayRejected(false)
         removeInteractionListeners()
-      } catch (err) {
+      } catch {
         // Autoplay was blocked by browser
-        setAutoplayRejected(true)
       }
     }
 
@@ -66,8 +63,7 @@ const MusicPlayer = ({ src = '/assets/music1.mp3' }) => {
       try {
         await audio.play()
         setPlaying(true)
-        setAutoplayRejected(false)
-      } catch (e) {
+      } catch {
         // ignore
       } finally {
         removeInteractionListeners()

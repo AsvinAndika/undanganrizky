@@ -2,7 +2,16 @@ import{ useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 
 const RSVP = () => {
-  const [name, setName] = useState('')
+  const [name, setName] = useState(() => {
+    try {
+      const params = new URLSearchParams(window.location.search)
+      const raw = params.get('to')
+      if (!raw) return ''
+      return decodeURIComponent(raw.replace(/\+/g, ' '))
+    } catch {
+      return ''
+    }
+  })
   const [attend, setAttend] = useState('yes')
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState([])
@@ -10,23 +19,9 @@ const RSVP = () => {
   const messagesRef = useRef(null)
   const [highlightId, setHighlightId] = useState(null)
 
-  // Auto-fill name from ?to=Query param (decode pluses)
-  useEffect(() => {
-    try {
-      const params = new URLSearchParams(window.location.search)
-      const raw = params.get('to')
-      if (raw && !name) {
-        const decoded = decodeURIComponent(raw.replace(/\+/g, ' '))
-        setName(decoded)
-      }
-    } catch (e) {
-      // ignore
-    }
-  }, [])
-
   const formatRelativeTime = (iso) => {
     try {
-      const now = Date.now()
+      const now = new Date().getTime()
       const past = new Date(iso).getTime()
       let diff = Math.floor((now - past) / 1000)
       if (isNaN(diff) || diff < 0) return ''
@@ -47,7 +42,7 @@ const RSVP = () => {
       if (months < 12) return `${months} bulan yang lalu`
       const years = Math.floor(months / 12)
       return `${years} tahun yang lalu`
-    } catch (e) {
+    } catch {
       return ''
     }
   }
