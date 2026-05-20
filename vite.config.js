@@ -12,11 +12,11 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   build: {
-    rollupOptions: {
+    rolldownOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          animation: ['framer-motion'],
+        manualChunks(id) {
+          if (id.includes('framer-motion')) return 'animation'
+          if (id.includes('react-dom') || id.includes('react/')) return 'vendor'
         }
       }
     }
