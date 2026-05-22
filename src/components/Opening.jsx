@@ -47,7 +47,7 @@ const Opening = ({ onComplete = () => {} }) => {
       />
 
       {/* Guest name + invite text overlay (fades with opening) */}
-      <div className={`pointer-events-none fixed inset-0 flex flex-col items-center justify-end pb-24 transition-opacity duration-700 ${fading ? 'opacity-0' : 'opacity-100'}`}>
+      <div className={`pointer-events-none fixed inset-0 flex flex-col items-center justify-end pb-13 transition-opacity duration-700 ${fading ? 'opacity-0' : 'opacity-100'}`}>
         {guestName ? (
           <div className={`mt-2 mb-8 text-center transition-opacity duration-500 ${nameFading ? 'opacity-0' : 'opacity-100'}`}>
             <div className="text-sm mb-3 text-white opacity-80">Kepada :</div>
