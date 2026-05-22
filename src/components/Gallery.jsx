@@ -1,25 +1,22 @@
-
 import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 
 const Gallery = () => {
   const images = [
-    '/assets/galeri/galeri1.jpg',
-    '/assets/galeri/galeri2.jpg',
-    '/assets/galeri/galeri3.jpg',
-    '/assets/galeri/galeri1.jpg',
-    '/assets/galeri/galeri2.jpg',
-    '/assets/galeri/galeri3.jpg',
-    '/assets/galeri/galeri3.jpg',
+     { src: '/assets/galeri/galeri4.jpg', isLandscape: true, isFullWidth: true }, 
+    { src: '/assets/galeri/galeri1.jpg', isLandscape: true },
+    { src: '/assets/galeri/galeri2.jpg', isLandscape: false },
+    { src: '/assets/galeri/galeri3.jpg', isLandscape: false },
+    { src: '/assets/galeri/galeri4.jpg', isLandscape: true },
+    { src: '/assets/galeri/galeri1.jpg', isLandscape: true },
+    { src: '/assets/galeri/galeri5.jpg', isLandscape: false },
+    { src: '/assets/galeri/galeri2.jpg', isLandscape: true }, 
+    { src: '/assets/galeri/galeri1.jpg', isLandscape: true, isFullWidth: true }, 
   ]
 
   const [open, setOpen] = useState(false)
   const [index, setIndex] = useState(0)
   const [touchStartX, setTouchStartX] = useState(null)
-  const [featured, setFeatured] = useState(0)
-  const [prevFeatured, setPrevFeatured] = useState(null)
-  const [isFading, setIsFading] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
 
   const openAt = (i) => {
     setIndex(i)
@@ -40,29 +37,6 @@ const Gallery = () => {
     return () => window.removeEventListener('keydown', onKey)
   }, [open, next, prev])
 
-  // rotate featured image every 10 seconds, pause on open or hover
-  useEffect(() => {
-    const startFade = () => {
-      const nextIdx = (featured + 1) % images.length
-      // keep a copy of current as prev, set next as featured but start with isFading=false
-      setPrevFeatured(featured)
-      setFeatured(nextIdx)
-      setIsFading(false)
-      // allow DOM to render new featured with opacity-0, then trigger fade
-      setTimeout(() => {
-        setIsFading(true)
-        // after fade duration clear prev
-        setTimeout(() => setPrevFeatured(null), 700)
-      }, 50)
-    }
-
-    const id = setInterval(() => {
-      if (open || isHovered) return
-      startFade()
-    }, 7000)
-    return () => clearInterval(id)
-  }, [images.length, featured, open, isHovered])
-
   const handleTouchStart = (e) => setTouchStartX(e.touches[0].clientX)
   const handleTouchEnd = (e) => {
     if (touchStartX == null) return
@@ -78,57 +52,47 @@ const Gallery = () => {
         <div className="text-center mb-6">
           <motion.p initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} viewport={{ once: true }} className="text-sm text-amber-500 uppercase tracking-widest">Memori</motion.p>
           <motion.h2 initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }} viewport={{ once: true }} className="text-5xl text-[#642828] md:text-6xl text-wedding-olive mt-3 font-bold" style={{ fontFamily: "'Great Vibes', cursive" }}>Galeri</motion.h2>
-          {/* <motion.p initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.06 }} viewport={{ once: true }} className="mt-3 text-sm text-[#642828] max-w-lg mx-auto">A collection of moments we treasure — feel free to send yours.</motion.p> */}
         </div>
 
         <motion.div initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.12 }} viewport={{ once: true }} className="bg-[#fff1d7] rounded-2xl shadow p-6 border border-[#e19823]">
-          <div className="grid grid-cols-3 grid-rows-3 gap-3">
-            <div
-              className="col-span-2 row-span-3 overflow-hidden rounded-md relative"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              {/* Crossfade layers */}
-              {prevFeatured !== null && (
-                <img
-                  src={images[prevFeatured]}
-                  alt={`gallery-prev-${prevFeatured}`}
-                  className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${isFading ? 'opacity-0' : 'opacity-100'}`}
-                />
-              )}
+          
+          {/* GRID CONTAINER */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 auto-rows-[120px] sm:auto-rows-[150px]">
+            {images.map((img, i) => {
+              // Jika isFullWidth true, berikan span kolom penuh dan gunakan tinggi 2 baris (atau sesuaikan) agar proporsional
+              const colSpan = img.isFullWidth ? 'col-span-2 sm:col-span-3 row-span-2' : (img.isLandscape ? 'row-span-1' : 'row-span-2')
 
-              <img
-                src={images[featured]}
-                alt={`gallery-${featured}`}
-                onClick={() => openAt(featured)}
-                className={`absolute inset-0 w-full h-full object-cover cursor-pointer transition-opacity duration-700 ${isFading ? 'opacity-100' : 'opacity-100'}`}
-              />
-            </div>
-
-            {images.map((src, i) => {
-              if (i === featured) return null
               return (
-                <motion.div key={i} className="overflow-hidden rounded-md" initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: i * 0.06 }} viewport={{ once: true }}>
+                <motion.div 
+                  key={i} 
+                  className={`overflow-hidden rounded-md w-full h-full ${colSpan}`}
+                  initial={{ opacity: 0, y: 14 }} 
+                  whileInView={{ opacity: 1, y: 0 }} 
+                  transition={{ duration: 0.7, delay: i * 0.06 }} 
+                  viewport={{ once: true }}
+                >
                   <img
-                    src={src}
+                    src={img.src}
                     alt={`gallery-${i}`}
                     onClick={() => openAt(i)}
-                    className="w-full h-40 sm:h-48 object-cover cursor-pointer transform transition-transform duration-300 hover:scale-105"
+                    className="w-full h-full object-cover cursor-pointer transform transition-transform duration-300 hover:scale-102"
                   />
                 </motion.div>
               )
             })}
           </div>
+
         </motion.div>
       </div>
 
+      {/* Lightbox / Preview Mode */}
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4">
           <button aria-label="close" onClick={() => setOpen(false)} className="absolute top-6 right-6 text-amber-50 bg-[#642828] rounded-full w-10 h-10 flex items-center justify-center shadow">✕</button>
           <button aria-label="prev" onClick={prev} className="absolute left-4 sm:left-8 text-amber-50 bg-[#642828] rounded-full w-10 h-10 flex items-center justify-center shadow">‹</button>
           <div className="max-w-[90vw] max-h-[90vh] flex items-center justify-center">
             <img
-              src={images[index]}
+              src={images[index].src}
               alt={`lightbox-${index}`}
               className="max-w-full max-h-full object-contain rounded-md"
               onTouchStart={handleTouchStart}

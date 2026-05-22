@@ -54,12 +54,12 @@ const EventDetails = () => {
             </div>
             <div className="mt-3 text-amber-50 flex items-center justify-center gap-3 text-sm">
               <img src="/assets/jam.png" alt="time" className="w-4 h-4 inline-block" />
-              <div>Pukul 9:00 WITA - Selesai</div>
+              <div>28 juni 2026, pukul 19.00 WITA - Selesai</div>
             </div>
 
             <div className="mt-4 text-sm text-amber-50">
               <div className="font-medium">LOKASI</div>
-              <div className="mt-1 text-amber-50">Jl.BKR Bali Cliff, Ungasan</div>
+              <div className="mt-1 text-amber-50"> jl. Merak, perum. Ungasan permai, br.santhi karya, Ungasan, Badung, Bali</div>
             </div>
 
             <div className="mt-4 w-full rounded-md overflow-hidden shadow-sm">

@@ -59,12 +59,24 @@ const RSVP = () => {
       time: new Date().toISOString()
     }
 
-    setMessages(prev => [entry, ...prev])
-    // highlight new message and scroll container
-    setHighlightId(entry.id)
-    setName('')
-    setAttend('yes')
-    setMessage('')
+    // try to POST to serverless API; fallback to local update if API fails
+    fetch('/api/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(entry)
+    }).then(r => r.ok ? r.json() : Promise.reject(r)).then(data => {
+      setMessages(data)
+      setHighlightId(entry.id)
+      setName('')
+      setAttend('yes')
+      setMessage('')
+    }).catch(() => {
+      setMessages(prev => [entry, ...prev])
+      setHighlightId(entry.id)
+      setName('')
+      setAttend('yes')
+      setMessage('')
+    })
   }
 
   // Scroll to top and clear highlight after a short delay when messages change
@@ -77,6 +89,15 @@ const RSVP = () => {
       return () => clearTimeout(t)
     }
   }, [messages, highlightId])
+
+  // load messages from server on mount
+  useEffect(() => {
+    fetch('/api/messages').then(r => r.ok ? r.json() : Promise.reject()).then(data => {
+      if (Array.isArray(data)) setMessages(data)
+    }).catch(() => {
+      // ignore, keep empty
+    })
+  }, [])
 
   return (
     <section className="relative overflow-hidden bg-[#642828] bg-cover bg-center p-4 shadow-lg">
@@ -126,7 +147,7 @@ const RSVP = () => {
         <motion.div initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.12 }} viewport={{ once: true }} className="mt-3 mb-3">
           <div className="bg-[#faf4eb] rounded-lg p-4 border border-[#e19823]">
             <h3 className="text-lg font-serif text-[#642828] mb-3">Ucapan</h3>
-            <div className="space-y-3 max-h-72 overflow-auto">
+            <div ref={messagesRef} className="space-y-3 max-h-72 overflow-auto">
               {(showAll ? messages : messages.slice(0, 3)).map(m => (
                 <div key={m.id} className={`p-3 bg-[#faf4eb] rounded-md shadow-sm border border-[#642828] ${m.id === highlightId ? 'animate-pulse' : ''}`}>
                   <div className="flex items-center justify-between">

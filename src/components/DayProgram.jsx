@@ -1,12 +1,8 @@
 
 const items = [
-  { time: '4:30 PM', title: 'Guest Arrival', desc: 'Welcome and reception' , icon: 'users'},
-  { time: '5:00 PM', title: 'Ceremony', desc: 'Civil wedding' , icon: 'heart'},
-  { time: '6:00 PM', title: 'Cocktail', desc: 'Aperitifs and drinks' , icon: 'glass'},
-  { time: '8:00 PM', title: 'Dinner', desc: 'Wedding banquet' , icon: 'knife'},
-  { time: '10:30 PM', title: 'First Dance', desc: "The newlyweds' dance" , icon: 'dance'},
-  { time: '11:00 PM', title: 'Party', desc: "Let's dance!" , icon: 'music'},
-  { time: '2:30 AM', title: 'End', desc: 'Goodbye' , icon: 'sparkles'},
+  { time: '19:00 ', title: 'Akad Nikah', desc: '' , icon: 'users'},
+  { time: '19:45 PM', title: 'Resepsi', desc: "" , icon: 'music'},
+  { time: '22:00 PM', title: 'Penutup', desc: "" , icon: 'music'},
 ]
 
 
@@ -46,7 +42,7 @@ const DayProgram = () => {
           {/* static vertical line */}
           <div className="absolute left-14 top-6 bottom-6 w-px bg-amber-200/30" />
 
-          <div className="space-y-8">
+          <div className="space-y-20">
             {items.map((it) => (
               <motion.div
                 key={it.time}
