@@ -33,23 +33,38 @@ async function writeJsonToGist(gistId, token, arr) {
   try { return JSON.parse(file.content) } catch { return arr }
 }
 
+import fs from 'fs'
+import path from 'path'
+
 export default async function handler(req, res) {
   const GIST_ID = process.env.GIST_ID
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN
-  if (!GIST_ID) {
-    return res.status(500).json({ error: 'Missing GIST_ID environment variable' })
-  }
 
   try {
     if (req.method === 'GET') {
-      // allow unauthenticated GET for public gists (no token)
-      const messages = await readJsonFromGist(GIST_ID, GITHUB_TOKEN)
-      return res.status(200).json(messages)
+      // If GIST_ID is set, read from gist; otherwise fallback to local public/messages.json
+      if (GIST_ID) {
+        const messages = await readJsonFromGist(GIST_ID, GITHUB_TOKEN)
+        return res.status(200).json(messages)
+      }
+
+      try {
+        const filePath = path.join(process.cwd(), 'public', 'messages.json')
+        if (fs.existsSync(filePath)) {
+          const raw = fs.readFileSync(filePath, 'utf8')
+          const parsed = JSON.parse(raw || '[]')
+          return res.status(200).json(Array.isArray(parsed) ? parsed : [])
+        }
+      } catch (e) {
+        console.error('local-read-error', e)
+      }
+
+      return res.status(200).json([])
     }
 
     if (req.method === 'POST') {
-      // POST requires a GitHub token to update the gist
-      if (!GITHUB_TOKEN) return res.status(501).json({ error: 'POST requires GITHUB_TOKEN env var' })
+      // POST requires a GIST_ID + GitHub token to update the gist
+      if (!GIST_ID || !GITHUB_TOKEN) return res.status(501).json({ error: 'POST requires GIST_ID and GITHUB_TOKEN env vars' })
 
       // parse body robustly (handles string or already-parsed)
       let entry = req.body

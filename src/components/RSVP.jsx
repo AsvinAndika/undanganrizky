@@ -15,6 +15,7 @@ const RSVP = () => {
   const [attend, setAttend] = useState('yes')
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState([])
+  const [apiAvailable, setApiAvailable] = useState(null)
   const [showAll, setShowAll] = useState(false)
   const messagesRef = useRef(null)
   const [highlightId, setHighlightId] = useState(null)
@@ -59,24 +60,43 @@ const RSVP = () => {
       time: new Date().toISOString()
     }
 
-    // try to POST to serverless API; fallback to local update if API fails
-    fetch('/api/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(entry)
-    }).then(r => r.ok ? r.json() : Promise.reject(r)).then(data => {
-      setMessages(data)
+    if (apiAvailable === null || apiAvailable === true) {
+      // try POST to API (if available). If apiAvailable is null we still attempt once.
+      fetch('/api/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(entry)
+      }).then(r => {
+        if (!r.ok) return Promise.reject(r)
+        return r.json()
+      }).then(data => {
+        setMessages(Array.isArray(data) ? data : (Array.isArray(messages) ? messages : []))
+        setApiAvailable(true)
+        setHighlightId(entry.id)
+        setName('')
+        setAttend('yes')
+        setMessage('')
+      }).catch(() => {
+        // mark API unavailable and fallback to local storage update
+        setApiAvailable(false)
+        const updated = [entry, ...messages]
+        setMessages(updated)
+        try { localStorage.setItem('undangan_rsvp_messages', JSON.stringify(updated)) } catch {}
+        setHighlightId(entry.id)
+        setName('')
+        setAttend('yes')
+        setMessage('')
+      })
+    } else {
+      // API not available -> persist locally
+      const updated = [entry, ...messages]
+      setMessages(updated)
+      try { localStorage.setItem('undangan_rsvp_messages', JSON.stringify(updated)) } catch {}
       setHighlightId(entry.id)
       setName('')
       setAttend('yes')
       setMessage('')
-    }).catch(() => {
-      setMessages(prev => [entry, ...prev])
-      setHighlightId(entry.id)
-      setName('')
-      setAttend('yes')
-      setMessage('')
-    })
+    }
   }
 
   // Scroll to top and clear highlight after a short delay when messages change
@@ -89,6 +109,37 @@ const RSVP = () => {
       return () => clearTimeout(t)
     }
   }, [messages, highlightId])
+
+  // on mount: try load from /api/messages, then /messages.json, then localStorage
+  useEffect(() => {
+    let did = false
+    fetch('/api/messages').then(r => {
+      if (!r.ok) return Promise.reject(r)
+      return r.json()
+    }).then(data => {
+      if (did) return
+      setApiAvailable(true)
+      if (Array.isArray(data)) setMessages(data)
+    }).catch(() => {
+      // try public/messages.json
+      fetch('/messages.json').then(r => r.ok ? r.json() : Promise.reject()).then(data => {
+        if (did) return
+        setApiAvailable(false)
+        if (Array.isArray(data)) setMessages(data)
+      }).catch(() => {
+        // fallback to localStorage
+        try {
+          const raw = localStorage.getItem('undangan_rsvp_messages')
+          if (raw) {
+            const parsed = JSON.parse(raw)
+            if (Array.isArray(parsed)) setMessages(parsed)
+          }
+        } catch {}
+        setApiAvailable(false)
+      })
+    })
+    return () => { did = true }
+  }, [])
 
   // load messages from server on mount
   useEffect(() => {
