@@ -1,8 +1,8 @@
 
 const items = [
-  { time: '19:00 ', title: 'Akad Nikah', desc: '' , icon: 'users'},
-  { time: '19:45 PM', title: 'Resepsi', desc: "" , icon: 'music'},
-  { time: '22:00 PM', title: 'Penutup', desc: "" , icon: 'music'},
+  { time: '19:00', title: 'Akad Nikah', desc: '' , icon: 'cincin'},
+  { time: '19:45', title: 'Resepsi', desc: "" , icon: 'resepsi'},
+  { time: '22:00', title: 'Penutup', desc: "" , icon: 'jam1'},
 ]
 
 
@@ -25,7 +25,7 @@ const DayProgram = () => {
             className="text-4xl font-bold"
             style={{ fontFamily: "'Great Vibes', cursive" }}
           >
-            Day Program
+            Susunan Acara
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 8 }}
@@ -34,7 +34,7 @@ const DayProgram = () => {
             viewport={{ once: true, amount: 0.4 }}
             className="text-amber-200 mt-2"
           >
-            What we have prepared for you
+            Jadilah Saksi Momen Bahagia Kami
           </motion.p>
         </div>
 
@@ -58,9 +58,9 @@ const DayProgram = () => {
                 >
                   <div className="w-10 h-10 rounded-full bg-olive-900 border border-amber-300 flex items-center justify-center overflow-hidden">
                     <motion.img
-                      src={`/icons/${it.icon}.png`}
+                      src={`/assets/${it.icon}.png`}
                       alt={it.icon}
-                      className="w-5 h-5 object-contain"
+                      className="w-6 h-6 object-contain"
                       variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.35 } } }}
                     />
                   </div>

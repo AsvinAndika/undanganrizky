@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
 
 const EventDetails = () => {
-  const mapSrc = 'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1971.2892372168558!2d115.163779!3d-8.8256103!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd25b5c828f36c5%3A0xefdd3b92533bc9af!2sSecret%20Garden%20Villa!5e0!3m2!1sid!2sid!4v1778472325783!5m2!1sid!2sid'
+  const mapSrc = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d985.6530628799392!2d115.16643366399761!3d-8.822448273165586!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd25b000559bfa1%3A0xedcdbbb29c031fda!2sFasum%20Bukit%20Ungasan%20Permai!5e0!3m2!1sid!2sid!4v1779461375230!5m2!1sid!2sid" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade'
   const lat = -8.8256103
   const lng = 115.163779
-  const placeLabel = 'Secret Garden Villa'
+  const placeLabel = 'Fasum Bukit Ungasan Permai, Badung, Bali'
 
   const openInMaps = (e) => {
     if (e && e.preventDefault) e.preventDefault()
@@ -50,11 +50,11 @@ const EventDetails = () => {
 
             <h2 className="text-3xl font-medium text-amber-50" style={{ fontFamily: "'Great Vibes', cursive" }}>Akad Nikah</h2>
             <div className="mt-3 text-amber-50 flex items-center justify-center gap-3 text-sm">
-              <div>Sabtu 27 Juni 2026</div>
+              <div>Minggu 28 Juni 2026</div>
             </div>
             <div className="mt-3 text-amber-50 flex items-center justify-center gap-3 text-sm">
               <img src="/assets/jam.png" alt="time" className="w-4 h-4 inline-block" />
-              <div>28 juni 2026, pukul 19.00 WITA - Selesai</div>
+              <div>pukul 19.00 WITA - Selesai</div>
             </div>
 
             <div className="mt-4 text-sm text-amber-50">

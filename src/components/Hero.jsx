@@ -17,7 +17,7 @@ const Hero = () => {
         <div className="text-center text-amber-50">
           <div className="text-sm uppercase tracking-widest text-amber-200">The Wedding Of</div>
           <h1 className="mt-4 text-5xl md:text-6xl font-bold" style={{ fontFamily: "'Great Vibes', cursive" }}>Rizky &amp; Jihan</h1>
-          <p className="mt-4 text-sm md:text-base">27 Juni 2026</p>
+          <p className="mt-4 text-sm md:text-base">28 Juni 2026</p>
         </div>
       </div>
 

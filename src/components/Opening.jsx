@@ -56,6 +56,10 @@ const Opening = ({ onComplete = () => {} }) => {
             <div className="mt-2 h-0.5 bg-white w-20 mx-auto rounded" />
           </div>
         ) : null}
+        {/* small instruction telling guests they can tap anywhere to open maps */}
+        <div className={`pointer-events-none mb-6 transition-opacity duration-500 ${fading ? 'opacity-0' : (nameFading ? 'opacity-0' : 'opacity-100')}`}>
+          <div className="text-center text-white text-xs opacity-80 px-3 py-1 bg-black/30 rounded">Tekan di mana saja untuk membuka Undangan</div>
+        </div>
       </div>
 
       {/* fade overlay to white when ending */}
