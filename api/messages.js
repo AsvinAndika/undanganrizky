@@ -36,21 +36,28 @@ async function writeJsonToGist(gistId, token, arr) {
 export default async function handler(req, res) {
   const GIST_ID = process.env.GIST_ID
   const GITHUB_TOKEN = process.env.GITHUB_TOKEN
-  if (!GIST_ID || !GITHUB_TOKEN) {
-    return res.status(500).json({ error: 'Missing GIST_ID or GITHUB_TOKEN environment variables' })
+  if (!GIST_ID) {
+    return res.status(500).json({ error: 'Missing GIST_ID environment variable' })
   }
 
   try {
     if (req.method === 'GET') {
+      // allow unauthenticated GET for public gists (no token)
       const messages = await readJsonFromGist(GIST_ID, GITHUB_TOKEN)
       return res.status(200).json(messages)
     }
 
     if (req.method === 'POST') {
-      // read body (raw)
-      let body = ''
-      for await (const chunk of req) body += chunk
-      const entry = JSON.parse(body)
+      // POST requires a GitHub token to update the gist
+      if (!GITHUB_TOKEN) return res.status(501).json({ error: 'POST requires GITHUB_TOKEN env var' })
+
+      // parse body robustly (handles string or already-parsed)
+      let entry = req.body
+      if (!entry) {
+        let raw = ''
+        for await (const chunk of req) raw += chunk
+        try { entry = JSON.parse(raw) } catch (e) { return res.status(400).json({ error: 'invalid_json' }) }
+      }
       if (!entry || !entry.id) return res.status(400).json({ error: 'invalid_entry' })
 
       const existing = await readJsonFromGist(GIST_ID, GITHUB_TOKEN)
