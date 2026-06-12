@@ -85,7 +85,7 @@ const CoupleDetails = () => {
           <h1 className="mt-10 text-3xl md:text-5xl" style={{ fontFamily: "'Great Vibes', cursive", color: '#f5d29a' }}>
             Jihan Shava Amani, S.S.
           </h1>
-          <p className="mt-0 text-sm text-amber-100 p-4">Putri ke-dua dari bapak Rudi Widjanarko dan Ibu Fadiah Elyana</p>
+          <p className="mt-0 text-sm text-amber-100 p-4">Putri ke-dua dari bapak Rudy Widjanarko dan Ibu Fadiah Elyana</p>
         </motion.div>
 
         {/* Ornamen "Dan" */}
