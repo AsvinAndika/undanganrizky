@@ -5,7 +5,6 @@ import OurJourney from './OurJourney'
 import DayProgram from './DayProgram'
 import Gift from './Gift'
 import EventDetails from './EventDetails'
-import RSVP from './RSVP'
 import Gallery from './Gallery'
 import Countdown from './Countdown'
 import Footer from './Footer'
@@ -21,7 +20,6 @@ const Invitation = () => {
         <EventDetails />
         <DayProgram />
         <Gift />
-        <RSVP />
         <Gallery />
       </main>
       <MusicPlayer src="/assets/musik1.mp3" />

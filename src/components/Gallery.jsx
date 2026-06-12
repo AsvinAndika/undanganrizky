@@ -50,7 +50,7 @@ const Gallery = () => {
 
   return (
     <section className="relative overflow-hidden bg-[#fff1d7] bg-cover bg-center p-4 shadow-lg">
-      <div className="max-w-3xl mx-auto px-4 mt-8 mb-8">
+      <div className="max-w-3xl mx-auto px-4 mt-2 mb-4">
         <div className="text-center mb-6">
           <motion.p initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} viewport={{ once: true }} className="text-sm text-amber-500 uppercase tracking-widest">Memori</motion.p>
           <motion.h2 initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.9 }} viewport={{ once: true }} className="text-5xl text-[#642828] md:text-6xl text-wedding-olive mt-3 font-bold" style={{ fontFamily: "'Great Vibes', cursive" }}>Galeri</motion.h2>
@@ -85,6 +85,10 @@ const Gallery = () => {
           </div>
 
         </motion.div>
+      </div>
+
+      <div className="mt-2 flex justify-center">
+          <img src="/assets/bungaa3.png" alt="ornament" className="w-70 opacity-100" />
       </div>
 
       {/* Lightbox / Preview Mode */}
