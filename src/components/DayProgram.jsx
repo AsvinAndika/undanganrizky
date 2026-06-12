@@ -1,9 +1,11 @@
 
 const items = [
-  { time: '19:45', title: 'Resepsi', desc: "" , icon: 'resepsi'},
-  { time: '19:50', title: 'Makan Malam', desc: "" , icon: 'dinner'},
-  { time: '20:20', title: 'Live Musik', desc: "" , icon: 'livemusik'},
-  { time: '22:00', title: 'Penutup', desc: "" , icon: 'jam1'},
+  { time: '19:45', title: 'Pembukaan', desc: "" , icon: 'resepsi'},
+  { time: '19:50', title: 'Pembacaan Ayat Suci Al-Quran', desc: "" , icon: 'quran'},
+  { time: '19:50', title: 'Sambutan Keluarga', desc: "" , icon: 'family'},
+  { time: '19:50', title: 'Ceramah', desc: "" , icon: 'speaker'},
+  { time: '20:20', title: 'Makan Malam & Hiburan', desc: "" , icon: 'dinner'},
+  { time: '22:00', title: 'Acara Bebas', desc: "" , icon: 'jam1'},
 ]
 
 
@@ -43,7 +45,7 @@ const DayProgram = () => {
           {/* static vertical line */}
           <div className="absolute left-14 top-6 bottom-6 w-px bg-amber-200/30" />
 
-          <div className="space-y-20">
+          <div className="space-y-16">
             {items.map((it) => (
               <motion.div
                 key={it.time}
@@ -69,13 +71,13 @@ const DayProgram = () => {
 
                 <div className="ml-14">
                   <motion.div className="flex items-center space-x-4">
-                    <motion.span
+                    {/* <motion.span
                       className="bg-amber-100 text-olive-900 text-xs font-medium px-3 py-1 rounded-full"
                       variants={{ hidden: { opacity: 0, x: -20 }, visible: (d = 0.04) => ({ opacity: 1, x: 0, transition: { duration: 0.5, ease: 'easeOut', delay: d } }) }}
                       custom={0.04}
                     >
                       {it.time}
-                    </motion.span>
+                    </motion.span> */}
 
                     <motion.h3
                       className="font-serif text-lg"
