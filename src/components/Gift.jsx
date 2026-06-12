@@ -7,8 +7,8 @@ const Gift = () => {
   const [confetti, setConfetti] = useState([])
   const containerRef = useRef(null)
   const ACCOUNTS = [
-    { bank: 'BNI', number: '0123456789', name: 'Rizky Dian Arhaman' },
-    { bank: 'BRI', number: '0123456789', name: 'Jihan Shava Amani' }
+    { bank: 'smbc', number: '90014914993', name: 'Rizky Dian Arhaman' },
+    { bank: 'smbc', number: '90120321794', name: 'Jihan Shava Amani' }
   ]
 
   useEffect(() => {
@@ -93,18 +93,19 @@ const Gift = () => {
                 <motion.div key={idx} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: idx * 0.06 }} viewport={{ once: true }} className="rounded-lg bg-white shadow-md p-4">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-white rounded flex items-center justify-center">
-                      {acc.bank === 'BNI' ? (
-                        <img src="/assets/BNI.png" alt="BNI" className="w-10 h-6 object-contain" onError={(e)=>{e.currentTarget.style.display='none'}} />
-                      ) : acc.bank === 'BRI' ? (
-                        <img src="/assets/BRI.png" alt="BRI" className="w-10 h-6 object-contain" onError={(e)=>{e.currentTarget.style.display='none'}} />
+                      {acc.bank === 'smbc' ? (
+                        <img src="/assets/smbc.png" alt="smbc" className="w-16 h-12 object-contain" onError={(e)=>{e.currentTarget.style.display='none'}} />
+                      ) : acc.bank === 'smbc' ? (
+                        <img src="/assets/smbc.png" alt="smbc" className="w-16 h-12 object-contain" onError={(e)=>{e.currentTarget.style.display='none'}} />
                       ) : (
                         <svg width="20" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="6" width="20" height="12" rx="2" fill="#FDE68A" stroke="#f3a34a"/></svg>
                       )}
                     </div>
                     <div>
-                      <div className="text-sm text-muted-foreground">Nomor Rekening :</div>
-                      <div className="font-mono text-sm text-foreground/90 tracking-wide select-all">{acc.number}</div>
-                      <div className="text-sm text-muted-foreground mt-1">Atas Nama : <span className="text-foreground font-semibold">{acc.name}</span></div>
+                      <div className="text-sm font-bold text-muted-foreground">Bank SMBC Indonesia</div>
+                      <div className="text-sm text-muted-foreground">Nomor Rekening :<span className="text-foreground font-semibold">{acc.number}</span></div>
+                      {/* <div className="font-mono text-sm text-foreground/90 tracking-wide select-all">{acc.number}</div> */}
+                      <div className="text-sm text-muted-foreground mt-1">Nama : <span className="text-foreground font-semibold">{acc.name}</span></div>
                     </div>
                   </div>
 

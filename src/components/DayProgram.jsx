@@ -1,6 +1,5 @@
 
 const items = [
-  { time: '19:00', title: 'Akad Nikah', desc: '' , icon: 'cincin'},
   { time: '19:45', title: 'Resepsi', desc: "" , icon: 'resepsi'},
   { time: '22:00', title: 'Penutup', desc: "" , icon: 'jam1'},
 ]

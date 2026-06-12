@@ -16,11 +16,11 @@ const Invitation = () => {
       <Hero />
       <main className="max-w-1xl mx-auto">
         <CoupleDetails />
+        <Countdown targetDate={new Date('2026-06-28T19:30:00')} />
         <OurJourney />
-        <Countdown targetDate={new Date('2026-06-28T19:00:00')} />
+        <EventDetails />
         <DayProgram />
         <Gift />
-        <EventDetails />
         <RSVP />
         <Gallery />
       </main>

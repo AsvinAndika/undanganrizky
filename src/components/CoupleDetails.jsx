@@ -75,7 +75,7 @@ const CoupleDetails = () => {
           DENGAN PENUH RASA SYUKUR DAN CINTA, KAMI MENGUNDANG BAPAK/IBU/SAUDARA/I UNTUK HADIR DAN MENJADI SAKSI DI HARI BAHAGIA KAMI.
         </motion.p>
 
-        {/* Mempelai Pria */}
+        {/* Mempelai Wanita */}
         <motion.div
           variants={fadeInUp}
           initial="hidden"
@@ -83,9 +83,9 @@ const CoupleDetails = () => {
           viewport={{ once: true }}
         >
           <h1 className="mt-10 text-3xl md:text-5xl" style={{ fontFamily: "'Great Vibes', cursive", color: '#f5d29a' }}>
-            Rizky Dian Arhaman, S.Pd.,Gr.
+            Jihan Shava Amani, S.S.
           </h1>
-          <p className="mt-0 text-sm text-amber-100 p-4">Putra pertama dari bapak Wahid Hasyim dan Ibu Baiq Muradah</p>
+          <p className="mt-0 text-sm text-amber-100 p-4">Putri ke-dua dari bapak Rudi Widjanarko dan Ibu Fadiah Elyana</p>
         </motion.div>
 
         {/* Ornamen "Dan" */}
@@ -99,7 +99,7 @@ const CoupleDetails = () => {
           <img src="/assets/dan.png" alt="ornament" className="mx-auto w-25 md:w-15 opacity-90" />
         </motion.div>
 
-        {/* Mempelai Wanita */}
+        {/* Mempelai Pria */}
         <motion.div
           variants={fadeInUp}
           initial="hidden"
@@ -107,9 +107,9 @@ const CoupleDetails = () => {
           viewport={{ once: true }}
         >
           <h2 className="text-3xl md:text-5xl" style={{ fontFamily: "'Great Vibes', cursive", color: '#f5d29a' }}>
-            Jihan Shava Amani, S.S.
+            Rizky Dian Arhaman, S.Pd.,Gr.
           </h2>
-          <p className="mt-0 text-sm text-amber-100 p-4">Putri ke-dua dari bapak Rudi Widjanarko dan Ibu Fadiah Elyana</p>
+          <p className="mt-0 text-sm text-amber-100 p-4">Putra pertama dari bapak Wahid Hasyim dan Ibu Baiq Muradah</p>
         </motion.div>
 
         {/* Bunga Bawah */}

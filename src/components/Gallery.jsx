@@ -3,14 +3,16 @@ import { motion } from 'framer-motion'
 
 const Gallery = () => {
   const images = [
-     { src: '/assets/galeri/galeri4.jpg', isLandscape: true, isFullWidth: true }, 
-    { src: '/assets/galeri/galeri1.jpg', isLandscape: true },
+     { src: '/assets/galeri/galeri6.jpg', isLandscape: true, isFullWidth: true }, 
+    { src: '/assets/galeri/galeri10.jpg', isLandscape: true },
     { src: '/assets/galeri/galeri2.jpg', isLandscape: false },
     { src: '/assets/galeri/galeri3.jpg', isLandscape: false },
     { src: '/assets/galeri/galeri4.jpg', isLandscape: true },
-    { src: '/assets/galeri/galeri1.jpg', isLandscape: true },
-    { src: '/assets/galeri/galeri5.jpg', isLandscape: false },
-    { src: '/assets/galeri/galeri2.jpg', isLandscape: true }, 
+    { src: '/assets/galeri/galeri5.jpg', isLandscape: true },
+    { src: '/assets/galeri/galeri7.jpg', isLandscape: false },
+    { src: '/assets/galeri/galeri11.jpg', isLandscape: false },
+    { src: '/assets/galeri/galeri8.jpg', isLandscape: false }, 
+    { src: '/assets/galeri/galeri9.jpg', isLandscape: true },
     { src: '/assets/galeri/galeri1.jpg', isLandscape: true, isFullWidth: true }, 
   ]
 
