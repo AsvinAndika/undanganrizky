@@ -48,7 +48,7 @@ const EventDetails = () => {
               <img src="/assets/bintang.png" alt="event" className="w-9 h-9" />
             </div>
 
-            <h2 className="text-3xl font-medium text-amber-50" style={{ fontFamily: "'Great Vibes', cursive" }}>Akad Nikah</h2>
+            <h2 className="text-3xl font-medium text-amber-50" style={{ fontFamily: "'Great Vibes', cursive" }}>Resepsi</h2>
             <div className="mt-3 text-amber-50 flex items-center justify-center gap-3 text-sm">
               <div>Minggu 28 Juni 2026</div>
             </div>

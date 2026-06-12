@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState, useMemo } from 'react'
 
-const MusicPlayer = ({ src = '/assets/music1.mp3' }) => {
+const MusicPlayer = ({ src = '/assets/musik1.mp3' }) => {
   const audioRef = useRef(null)
   const [playing, setPlaying] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
 
   // Normalize to array of candidate sources. Add a sensible fallback.
-  const sources = useMemo(() => Array.isArray(src) ? src : [src, '/assets/music1.mp3'], [src])
+  const sources = useMemo(() => Array.isArray(src) ? src : [src, '/assets/musik1.mp3'], [src])
 
   useEffect(() => {
     const audio = audioRef.current

@@ -1,6 +1,8 @@
 
 const items = [
   { time: '19:45', title: 'Resepsi', desc: "" , icon: 'resepsi'},
+  { time: '19:50', title: 'Makan Malam', desc: "" , icon: 'dinner'},
+  { time: '20:20', title: 'Live Musik', desc: "" , icon: 'livemusik'},
   { time: '22:00', title: 'Penutup', desc: "" , icon: 'jam1'},
 ]
 
