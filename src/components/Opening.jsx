@@ -40,7 +40,7 @@ const Opening = ({ onComplete = () => {} }) => {
       <video
         ref={videoRef}
         className={`w-full h-full object-cover transition-opacity duration-700 controls-hidden ${fading ? 'opacity-0' : 'opacity-100'}`}
-        src="/assets/opening1.mp4"
+        src="/assets/opening11.mp4"
         onClick={handleVideoClick}
         onEnded={handleEnded}
         playsInline
